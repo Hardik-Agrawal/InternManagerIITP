@@ -1,1 +1,1 @@
-# InternManagerIITP
+# intern-manager
