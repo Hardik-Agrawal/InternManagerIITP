@@ -1,0 +1,9 @@
+li {
+  font-size: large;
+  padding: 10px;
+}
+
+#projects {
+  display: inline-block;
+  padding-left: 10vw;
+}
