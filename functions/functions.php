@@ -363,3 +363,12 @@ function password_reset()
         redirect("recover.php");
     }
 }
+/**********************************add project*************************/
+function add_project($email, $title, $description)
+{
+    $sql = "INSERT INTO projects(prof_email,title,description)";
+    $sql .= "VALUES('$email', '$title', '$description')";
+    $result = query($sql);
+    confirm($result);
+    return;
+}

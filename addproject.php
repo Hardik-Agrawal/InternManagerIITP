@@ -8,8 +8,17 @@ if (!logged_in()) {
 $row = getUserDetails($_SESSION['email']);
 $projects = getProfProjects($_SESSION['email']);
 ?>
+<!-- <a href="./prof_profile.php" class="btn btn-warning btn-medium">Back to Profile</a> -->
 <div class="container">
-    <form action="/action_page.php" id="projectForm">
+
+    <div>
+        <?php
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            add_project($_SESSION['email'], $_POST['title'], $_POST['des']);
+        }
+        ?>
+    </div>
+    <form action="./addproject.php" id="projectForm" method="POST">
         <div class="form-group">
             <label for="title">Title</label>
             <input type="text" name="title" class="form-control" id="title" style="width: 60%">

@@ -20,7 +20,6 @@ $projects = getProfProjects($_SESSION['email']);
 			<?php } ?>
 		</div>
 		<div class="col">
-			<p>hhh</p>
 			<p>Name: <?php echo "{$row['first_name']} {$row['last_name']}" ?></p>
 			<p>Gender: <?php echo "{$row['gender']}" ?></p>
 			<a href="./addproject.php" class="btn btn-medium btn-primary">Add Project</a>
@@ -33,7 +32,7 @@ $projects = getProfProjects($_SESSION['email']);
 		<div class="card">
 			<h5 class="card-header"><?php echo $project['title'] ?></h5>
 			<div class="card-body">
-				<h5 class="card-title"><?php echo $project['title']  ?></h5>
+				<!-- <h5 class="card-title"><?php echo $project['title']  ?></h5> -->
 				<p class="card-text"><?php echo $project['description'] ?></p>
 				<a href="#" class="btn btn-primary">More Details</a>
 			</div>
