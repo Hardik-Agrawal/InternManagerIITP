@@ -143,7 +143,7 @@ function register_user($first_name, $last_name, $type, $gender, $email, $passwor
 
     $subject = "Activate Account";
     $msg = "Please click the link below to activate your account
-        http://localhost/InternManagerIITP/activate.php?email=$email&code=$validation_code
+        http://localhost/InternManagerIITP/activate.php?email=$email&code=$validation_code&type=$type
         ";
     $headers = "From: norreply@yourwebsite.com";
     if (send_email($email, $subject, $msg, $headers)) {
@@ -177,6 +177,7 @@ function activate_user()
                     $sql2 = "UPDATE users SET active = 1 WHERE email = '$email' AND validation_code = '$validation_code'";
                     $result2 = query($sql2);
                     confirm($result2);
+
                     set_message("<p class='alert alert-success'>Your account has been activated.<p>");
                     redirect("login.php");
                 }
@@ -187,7 +188,21 @@ function activate_user()
         }
     }
 }
-
+function add_student($email)
+{
+$query = "SELECT * FROM users WHERE email ='$email'";
+$result = query($query);
+confirm($result);
+$row = fetch_array($result);
+$email = $row['email'];
+$first_name  = $row['first_name'];
+$last_name = $row['last_name'];
+$gender = $row['gender'];
+$password = $row['password'];
+$query = "INSERT INTO students (`email`,`first_name`,`last_name`,`password`,`Gender`) VALUES ('$email','$first_name','$last_name','$gender','$password');";
+$result = query($query);
+confirm($result);
+}
 /***************************** login validation functions *********************************/
 function validate_user_login()
 {
@@ -371,4 +386,26 @@ function add_project($email, $title, $description)
     $result = query($sql);
     confirm($result);
     return;
+}
+// For adding the college of the student
+function setCollegeName($email,$name){
+    $query = "UPDATE students SET college = '$name' WHERE email = '$email';";
+    $result = query($query);
+    confirm($result);
+}
+function setDescription($email,$description){
+    $query = "UPDATE students SET description = '$description' WHERE email = '$email';";
+    $result = query($query);
+    confirm($result);
+}
+function getAllProfProjects(){
+    $query = "SELECT * FROM `projects`";
+    $res = query($query);
+    confirm($res);  
+    $data=array();
+    while($row = mysqli_fetch_array($res)){
+        $data[]=$row;
+    }
+    mysqli_free_result($res);
+    return $data;
 }
