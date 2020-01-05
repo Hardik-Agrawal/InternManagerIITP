@@ -9,42 +9,37 @@ if (!logged_in()) {
 }
 $row = getStudentDetails($_SESSION['email']);
 require './imageUpload.php';
+require './resumeUpload.php';
 if (isset($_POST['dataEnter'])) {
 	if (isset($_POST['collegeName']))
 		setCollegeName($row['email'], $_POST['collegeName']);
 	if (isset($_POST['description']))
 		setDescription($row['email'], $_POST['description']);
 }
-$temp = getAllProfProjects();
+$temp = getAllProfProjects($row['email']);
 $error = '';
+$projectCount = $_SESSION['projectCount']+1;
 if (isset($_POST['submitProj'])) {
-	$count = 0;
+	$email = $_SESSION['email'];
 	foreach ($temp as $k => $v) {
 		if (isset($_POST[$v[0]])) {
-			$count++;
+			$var = "project" . $projectCount . "_id";
+			$query = "UPDATE students SET $var = '$v[0]' WHERE email = '$email';";
+			$res = query($query);
+			confirm($res);
+			$error = "Succesfully submitted your response";
 		}
 	}
-	if ($count != 4)
-		$error = "You can select atmost 4 projects";
-	if($count === 4){
-		$loc = 0;
-		$email = $_SESSION['email'];
-		foreach ($temp as $k => $v) {
-			if (isset($_POST[$v[0]])) {
-				$loc++;
-				$var = "project".$loc."_id";
-				$query = "UPDATE students SET $var = '$v[0]' WHERE email = '$email';";
-				$res = query($query);
-				confirm($res);
-				$query = "UPDATE students SET projectSelected = 1 WHERE email = '$email';";
-				$res = query($query);
-				confirm($res);
-				$error = "Succesfully submitted your response";
-			}
-		}
+	$projectCount++;
+	$_SESSION['projectCount']++;
+	if($projectCount === 4)
+	{
+		$query = "UPDATE students SET projectSelected = 1 WHERE email = '$email';";
+		$res = query($query);
+		confirm($res);
 	}
-
 }
+
 ?>
 <div class="container-fluid">
 	<div class="row">
@@ -72,6 +67,12 @@ if (isset($_POST['submitProj'])) {
 								<input type="submit" name="submitImage" value="Upload File Now" class="form-control btn btn-primary">
 							</div>
 						</form>
+					<?php else : ?>
+						<div class="form-group">
+							change uploaded Image:
+							<input type="file" name="myfile" id="fileToUpload" class="form-control">
+							<input type="submit" name="submitImage" value="Upload File Now" class="form-control btn btn-primary">
+						</div>
 					<?php endif; ?>
 				</div>
 			</div>
@@ -100,6 +101,13 @@ if (isset($_POST['submitProj'])) {
 					<p><?php echo $row['description'] ?></p>
 				<?php endif; ?>
 			<?php endif; ?>
+			<form action="" method="post" enctype="multipart/form-data">
+				<div class="form-group">
+					Upload the resume:
+					<input type="file" name="myfile" id="fileToUpload" class="form-control">
+					<input type="submit" name="submitResume" value="Upload File Now" class="form-control btn btn-primary">
+				</div>
+			</form>
 		</div>
 	</div>
 	<?php if ($row['projectSelected'] === "0") : ?>
@@ -107,16 +115,16 @@ if (isset($_POST['submitProj'])) {
 			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 				<h1>Select Projects</h1>
 				<?php if ($error != '') : ?>
-						<div class="alert alert-warning alert-dismissible fade show" role="alert">
-							<?php echo $error ?>
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-					<?php endif; ?>
+					<div class="alert alert-warning alert-dismissible fade show" role="alert">
+						<?php echo $error ?>
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				<?php endif; ?>
 			</div>
 			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-
+				<h1>Select your <?php echo $projectCount ?></h1>
 				<form action="" method="POST">
 					<div class="form-group">
 						<table class="table table-striped table-hover">

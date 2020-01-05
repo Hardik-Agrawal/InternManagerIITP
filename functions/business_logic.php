@@ -29,4 +29,9 @@
         $result = query($query);
         confirm($result);
     }
+    function addPdfToDatabase($name,$email){
+        $query = "UPDATE students SET resumeName = '$name' WHERE email = '$email'";
+        $result = query($query);
+        confirm($result);
+    }
 ?>

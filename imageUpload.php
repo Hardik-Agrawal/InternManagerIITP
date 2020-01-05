@@ -13,13 +13,10 @@ if(isset($_POST['submitImage'])){
 
     $uploadPath = $currentDir . $uploadDirectory . basename($fileName); 
    // Add image name to the database
-    addImagetoDatabase($fileName,$row['email']);    
-
-
+ 
         if (! in_array($fileExtension,$fileExtensions)) {
             $errors[] = "This file extension is not allowed. Please upload a JPEG or PNG file";
         }
-
         if ($fileSize > 2000000) {
             $errors[] = "This file is more than 2MB. Sorry, it has to be less than or equal to 2MB";
         }
@@ -30,6 +27,7 @@ if(isset($_POST['submitImage'])){
 
             if ($didUpload) {
                 echo "The file " . basename($fileName) . " has been uploaded";
+                addImagetoDatabase($fileName,$row['email']);   
             } else {
                 echo "An error occurred somewhere. Try again or contact the admin";
             }
