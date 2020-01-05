@@ -203,6 +203,15 @@ $query = "INSERT INTO students (`email`,`first_name`,`last_name`,`password`,`Gen
 $result = query($query);
 confirm($result);
 }
+function checkProjectStatus($email){
+    $query = "SELECT projectSelected FROM students WHERE email = '$email'";
+    $result = query($query);
+    confirm($result);
+    $row = fetch_array($result);
+    if($row['projectSelected'] == 0)
+    return false;
+    return true;
+}
 /***************************** login validation functions *********************************/
 function validate_user_login()
 {
@@ -227,6 +236,10 @@ function validate_user_login()
                 if ($_SESSION['type'] == 1) {
                     redirect("prof_profile.php");
                 } else {
+                    if(checkProjectStatus($email))
+                    $_SESSION['projectCount'] = 4;
+                    else
+                    $_SESSION['projectCount'] = 0;
                     redirect("stud_profile.php");
                 }
             }
@@ -398,10 +411,18 @@ function setDescription($email,$description){
     $result = query($query);
     confirm($result);
 }
-function getAllProfProjects(){
-    $query = "SELECT * FROM `projects`";
+function getAllProfProjects($email){
+    $query = "SELECT * FROM `students` WHERE email = '$email'";
     $res = query($query);
     confirm($res);  
+    $row = fetch_array($res);
+    $project1_id = $row['project1_id'];
+    $project2_id = $row['project2_id'];
+    $project3_id = $row['project3_id'];
+    $project4_id = $row['project4_id'];
+    $query  = "SELECT * FROM `projects`  WHERE id != '$project1_id' AND  id != '$project2_id' AND id != '$project3_id' AND id != '$project4_id'";
+    $res = query($query);
+    confirm($res);
     $data=array();
     while($row = mysqli_fetch_array($res)){
         $data[]=$row;

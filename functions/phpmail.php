@@ -19,7 +19,7 @@ function send_php_mail($email, $subject, $msg, $headers)
         $mail->Password   = 'mkaqaumuchffjcmh';                             // SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
         $mail->Port       = 587;                                    // TCP port to connect to
-
+  
         //Recipients
         $mail->setFrom('ashyadavash@gmail.com', 'Intern-Manager IIT Patna');
         $mail->addAddress($email);
