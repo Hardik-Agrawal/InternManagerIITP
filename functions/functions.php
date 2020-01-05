@@ -236,17 +236,26 @@ function validate_user_login()
                 if ($_SESSION['type'] == 1) {
                     redirect("prof_profile.php");
                 } else {
-                    if(checkProjectStatus($email))
-                    $_SESSION['projectCount'] = 4;
-                    else
-                    $_SESSION['projectCount'] = 0;
                     redirect("stud_profile.php");
                 }
             }
         }
     }
 }
-
+function getProjectCount($email){
+    $query = "SELECT projectSelected FROM `students` WHERE email = '$email'";
+    $res = query($query);
+    confirm($res);
+    $row = fetch_array($res);
+    return $row['projectSelected'];
+}
+function getProjectName($id){
+    $query = "SELECT title FROM projects WHERE id = '$id'";
+    $res = query($query);
+    confirm($res);
+    $row=fetch_array($res);
+    return $row['title']; 
+}
 /***************************** login user function *********************************/
 function login_user($email, $password, $remember)
 {
