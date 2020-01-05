@@ -439,3 +439,25 @@ function getAllProfProjects($email){
     mysqli_free_result($res);
     return $data;
 }
+function getParticularProfProjects($email){
+    $query  = "SELECT * FROM `projects` WHERE prof_email = '$email'";
+     $res = query($query);
+     confirm($res);
+        $data = array();
+        while ($row = mysqli_fetch_array($res)) {
+            $data[] = $row;
+        }
+        mysqli_free_result($res);
+        return $data;
+}
+function getRegisteredStudents($id){
+    $query = "SELECT * FROM `students` WHERE project1_id = '$id' OR project2_id = '$id' OR project3_id = '$id' OR project4_id = '$id'";
+    $res = query($query);
+    confirm($res);
+    $data = array();
+    while($row = mysqli_fetch_array($res)){
+        $data[] = $row;
+    }
+    mysqli_free_result($res);
+    return $data;
+}
