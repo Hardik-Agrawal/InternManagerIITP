@@ -18,7 +18,7 @@ if (isset($_POST['dataEnter'])) {
 }
 $temp = getAllProfProjects($row['email']);
 $error = '';
-$projectCount = $_SESSION['projectCount']+1;
+$projectCount = $_SESSION['projectCount'] + 1;
 if (isset($_POST['submitProj'])) {
 	$email = $_SESSION['email'];
 	foreach ($temp as $k => $v) {
@@ -32,8 +32,7 @@ if (isset($_POST['submitProj'])) {
 	}
 	$projectCount++;
 	$_SESSION['projectCount']++;
-	if($projectCount === 4)
-	{
+	if ($projectCount === 4) {
 		$query = "UPDATE students SET projectSelected = 1 WHERE email = '$email';";
 		$res = query($query);
 		confirm($res);
@@ -42,6 +41,21 @@ if (isset($_POST['submitProj'])) {
 
 ?>
 <div class="container-fluid">
+	<?php if ($resumeUploadError !== 'Successfully Uploaded' && $resumeUploadError !== '') : ?>
+		<div class="alert alert-warning alert-dismissible fade show" role="alert">
+			<?php echo $resumeUploadError ?>
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	<?php elseif($resumeUploadError !== '') : ?>
+		<div class="alert alert-info alert-dismissible fade show" role="alert">
+			<?php echo $resumeUploadError ?>
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	<?php endif; ?>
 	<div class="row">
 		<h1>Student Profile</h1>
 	</div>
