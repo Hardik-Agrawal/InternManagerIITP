@@ -7,6 +7,7 @@ if (!logged_in()) {
 }
 $row = getUserDetails($_SESSION['email']);
 $projects = getProfProjects($_SESSION['email']);
+require './moreDetails.php';
 ?>
 
 <div class="container">
@@ -34,7 +35,22 @@ $projects = getProfProjects($_SESSION['email']);
 			<div class="card-body">
 				<!-- <h5 class="card-title"><?php echo $project['title']  ?></h5> -->
 				<p class="card-text"><?php echo $project['description'] ?></p>
-				<a href="#" class="btn btn-primary">More Details</a>
+
+				
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-4">
+							<form action="" method="post" enctype="multipart/form-data">
+							<div class="form-group">
+								Upload the details of the projects:
+								<input type="file" name="myfile" id="fileToUpload" class="form-control">
+								<input type="submit" name="submitResume" value="Upload File Now" class="form-control btn btn-primary">
+							</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<!-- <a href="./moreDetails.php" class="btn btn-primary">More Details</a> -->
 			</div>
 		</div>
 		<br />
