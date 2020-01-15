@@ -10,7 +10,6 @@ while($row = mysqli_fetch_array($res)){
 }
 mysqli_free_result($res);
 ?>
-
 <div style="height: 5vh"></div>
 <div class="container">
     <?php foreach ($projects as $project) { ?>

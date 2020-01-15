@@ -276,6 +276,7 @@ function login_user($email, $password, $remember)
                 }
                 $_SESSION['email'] = $email;
                 $_SESSION['type'] = $row['type'];
+                $_SESSION['id'] = $row['id'];
                 return true;
             } else {
                 $link = "functions/resend_activation_link.php?email=$email";
@@ -455,6 +456,17 @@ function getRegisteredStudents($id){
     $res = query($query);
     confirm($res);
     $data = array();
+    while($row = mysqli_fetch_array($res)){
+        $data[] = $row;
+    }
+    mysqli_free_result($res);
+    return $data;
+}
+
+function getDepartments(){
+    $query = "SELECT * FROM departments";
+    $res = query($query);
+    confirm($res);
     while($row = mysqli_fetch_array($res)){
         $data[] = $row;
     }
