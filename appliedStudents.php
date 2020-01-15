@@ -5,8 +5,8 @@ if (!logged_in()) {
 	set_message("<p class='bg-danger'>Please login again to view that page<p>");
 	redirect("login.php");
 }
-$email = $_SESSION['email'];
-$projects = getParticularProfProjects($email);
+$id = $_SESSION['id'];
+$projects = getParticularProfProjects($id);
 ?>
 <div class="container">
     <h1>Projects</h1>

@@ -440,8 +440,8 @@ function getAllProfProjects($email){
     mysqli_free_result($res);
     return $data;
 }
-function getParticularProfProjects($email){
-    $query  = "SELECT * FROM `projects` WHERE prof_email = '$email'";
+function getParticularProfProjects($id){
+    $query  = "SELECT * FROM `projects` WHERE prof_id = '$id'";
      $res = query($query);
      confirm($res);
         $data = array();
