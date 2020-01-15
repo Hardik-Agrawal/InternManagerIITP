@@ -9,9 +9,31 @@ while ($row = mysqli_fetch_array($res)) {
     $projects[] = $row;
 }
 mysqli_free_result($res);
+$departments = getDepartments();
+print_r($departments);
+if (isset($_POST['searchDepartments'])) {
+    $department = $_POST['department'];
+    $query = "SELECT * FROM projects WHERE department = '$department'";
+    $res = query($query);
+    confirm($res);
+    $projects = array();
+    while ($row = mysqli_fetch_array($res)) {
+        $projects[] = $row;
+    }
+    mysqli_free_result($res);
+}
 ?>
 <div style="height: 5vh"></div>
 <div class="container">
+    <form action="" method="POST">
+        <label for="department">Select Department</label>
+        <select name="department">
+            <?php foreach ($departments as $k => $v) : ?>
+                <option value=<?php echo  $v['name'] ?>><?php echo $v['name'] ?> </option>
+            <?php endforeach; ?>
+        </select>
+        <input type="submit" value="Search" name="searchDepartments">
+    </form>
     <?php foreach ($projects as $project) { ?>
         <div class="card">
             <h5 class="card-header"><?php echo $project['title'] ?></h5>
