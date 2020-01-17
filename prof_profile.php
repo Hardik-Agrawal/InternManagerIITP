@@ -44,7 +44,7 @@ if(isset($_POST['submitPDF'])){
 				<h5>	Faculty-Wepage : <a href=<?php echo $project['faculty_webpage'] ?>>Faculty Webpage</a></h5>
 				<form action="" method="post" enctype="multipart/form-data">
 				<div class="form-group">
-					<input type="text" name="id" value=<?php echo $project['id'] ?>> 
+					<input type="text" name="id"  style="display:none" value=<?php echo $project['id']  ?>> 
 					Upload pdf for the project
 					<input type="file" name="myfile" id="fileToUpload" class="form-control">
 					<input type="submit" name="submitPDF" value="Upload File Now" class="form-control btn btn-primary">

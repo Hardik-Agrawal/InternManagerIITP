@@ -473,3 +473,17 @@ function getDepartments(){
     mysqli_free_result($res);
     return $data;
 }
+
+function insertInPrefrences($count,$student_id,$project_id){
+    $query = "SELECT prof_id FROM projects WHERE id = '$project_id'";
+    $res = query($query);
+    confirm($res);
+    $row = fetch_array($res);
+    $prof_id = $row['prof_id'];
+    print_r($student_id);
+    print_r($project_id);
+    $query = "INSERT INTO `prefrence_$count` (`project_id`,`student_id`,`prof_id`) VALUES ('$project_id','$student_id','$prof_id')";
+    $res = query($query);
+    confirm($res);
+    return ;
+}

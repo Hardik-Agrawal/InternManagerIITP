@@ -10,7 +10,6 @@ while ($row = mysqli_fetch_array($res)) {
 }
 mysqli_free_result($res);
 $departments = getDepartments();
-print_r($departments);
 if (isset($_POST['searchDepartments'])) {
     $department = $_POST['department'];
     $query = "SELECT * FROM projects WHERE department = '$department'";
@@ -41,7 +40,7 @@ if (isset($_POST['searchDepartments'])) {
                 <h5>Title <?php echo $project['title']  ?></h5>
                 <p class="card-text"><?php echo $project['description'] ?></p>
                 <h5>Abstract : <?php echo $project['abstract']; ?></h5>
-                <h5>Deparment : <?php echo $project['department']; ?></h5>
+                <h5>Department : <?php echo $project['department']; ?></h5>
                 <h5>Skills : <?php $project['skills'] ?></h5>
                 <h5>Project-Wepage : <a href=<?php echo $project['project_webpage'] ?>>Project Webpage</a></h5>
                 <h5> Faculty-Wepage : <a href=<?php echo $project['faculty_webpage'] ?>>Faculty Webpage</a></h5>
