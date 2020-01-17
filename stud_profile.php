@@ -23,6 +23,7 @@ if (isset($_POST['submitProj'])) {
 	$email = $_SESSION['email'];
 	foreach ($temp as $k => $v) {
 		if (isset($_POST[$v[0]])) {
+			insertInPrefrences($projectCount, $_SESSION['id'], $v[0]);
 			$var = "project" . $projectCount . "_id";
 			print_r($var);
 			$query = "UPDATE students SET $var = '$v[0]'  WHERE email = '$email';";
@@ -151,16 +152,18 @@ foreach ($projects as $val) {
 									<th scope="col">Select</th>
 									<th scope="col">Name</th>
 									<th scope="col">Description</th>
-									<th scope="col">Professor Email</th>
+									<th scope="col">Project Website</th>
+									<th scope="col">Professor Website</th>
 								</tr>
 							</thead>
 							<tbody>
 								<?php foreach ($temp as $key => $val) : ?>
 									<tr>
 										<td><input type="checkbox" name=<?php echo $val[0] ?>></td>
-										<td><?php echo $val[2] ?></td>
-										<td><?php echo $val[3] ?></td>
-										<td><?php echo $val[1] ?></td>
+										<td><?php echo $val['title'] ?></td>
+										<td><?php echo $val['description'] ?></td>
+										<td><a href='<?php echo $val['project_webpage'] ?>'></a><?php echo $val['project_webpage'] ?></td>
+										<td><a href='<?php echo $val['faculty_webpage'] ?>'></a><?php echo $val['faculty_webpage'] ?></td>
 
 									</tr>
 								<?php endforeach; ?>
