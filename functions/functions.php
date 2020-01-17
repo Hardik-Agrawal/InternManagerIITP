@@ -194,12 +194,13 @@ $query = "SELECT * FROM users WHERE email ='$email'";
 $result = query($query);
 confirm($result);
 $row = fetch_array($result);
+$id = $row['id'];
 $email = $row['email'];
 $first_name  = $row['first_name'];
 $last_name = $row['last_name'];
 $gender = $row['gender'];
 $password = $row['password'];
-$query = "INSERT INTO students (`email`,`first_name`,`last_name`,`password`,`Gender`) VALUES ('$email','$first_name','$last_name','$gender','$password');";
+$query = "INSERT INTO students (`id`,`email`,`first_name`,`last_name`,`password`,`Gender`) VALUES ('$id','$email','$first_name','$last_name','$password','$gender');";
 $result = query($query);
 confirm($result);
 }
@@ -440,8 +441,8 @@ function getAllProfProjects($email){
     mysqli_free_result($res);
     return $data;
 }
-function getParticularProfProjects($id){
-    $query  = "SELECT * FROM `projects` WHERE prof_id = '$id'";
+function getParticularProfProjects($id,$phase){
+    $query  = "SELECT project_id FROM prefrence_$phase WHERE prof_id = '$id'";
      $res = query($query);
      confirm($res);
         $data = array();
@@ -486,4 +487,31 @@ function insertInPrefrences($count,$student_id,$project_id){
     $res = query($query);
     confirm($res);
     return ;
+}
+
+function getProfPhase($id){
+    $query =  "SELECT phase FROM professors WHERE id = '$id'";
+    $res = query($query);
+    confirm($res);
+    $row = fetch_array($res);
+    return $row['phase'];
+}
+function getProjectTitle($id){
+    $query  = "SELECT title FROM projects WHERE id = '$id'";
+    $res = query($query);
+    confirm($res);
+    $row = fetch_array($res);
+    return $row['title'];
+}
+
+function getStudentsInPhase($id,$phase,$proj_id){
+    $query = "SELECT first_name, last_name FROM students AS s , prefrence_$phase AS p WHERE p.prof_id = '$id' AND p.project_id='$proj_id' AND p.student_id = s.id";
+    $res = query($query);
+    confirm($res);
+    $data = array();
+    while($row = mysqli_fetch_array($res)){
+        $data[] = $row;
+    }
+    mysqli_free_result($res);
+    return $data;
 }

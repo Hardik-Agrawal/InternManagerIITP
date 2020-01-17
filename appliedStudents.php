@@ -6,19 +6,23 @@ if (!logged_in()) {
     redirect("login.php");
 }
 $id = $_SESSION['id'];
-$projects = getParticularProfProjects($id);
+$phase = getProfPhase($id);
+$projects = getParticularProfProjects($id,$phase);
+
 ?>
 <div class="container">
     <h1>Projects</h1>
     <?php foreach ($projects as $project) {
-        $id = $project['id'];
-        $students = getRegisteredStudents($id);
+        $title = getProjectTitle($project['project_id']);
+        print_r($title);
+        $proj_id = $project['project_id'];
+        $students = getStudentsInPhase($id,$phase,$proj_id);
     ?>
         <?php if (count($students) !== 0) : ?>
-            <h3><?php echo $project['title'] ?></h3>
+            <h3><?php echo $title ?></h3>
             <ul class="list-group">
                 <?php foreach ($students as $student) : ?>
-                    <button type="button" class="list-group-item list-group-item-action"><?php echo $student[1]; ?></button>
+                    <button type="button" class="list-group-item list-group-item-action"><?php echo $student['first_name']."  ".$student['last_name'] ; ?></button>
                 <?php endforeach; ?>
             <?php endif ?>
             </ul>
