@@ -15,13 +15,13 @@ function send_php_mail($email, $subject, $msg, $headers)
         $mail->isSMTP();                                            // Send using SMTP
         $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-        $mail->Username   = 'vatsal.eliot@gmail.com';                     // SMTP username
-        $mail->Password   = 'mkaqaumuchffjcmh';                             // SMTP password
+        $mail->Username   =                      // SMTP username
+        $mail->Password   =                              // SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
-        $mail->Port       = 587;                                    // TCP port to connect to
+        $mail->Port       = 25;                                    // TCP port to connect to
   
         //Recipients
-        $mail->setFrom('ashyadavash@gmail.com', 'Intern-Manager IIT Patna');
+        $mail->setFrom('blankkindler@gmail.com', 'Intern-Manager IIT Patna');
         $mail->addAddress($email);
 
         // Content
@@ -38,7 +38,7 @@ function send_php_mail($email, $subject, $msg, $headers)
             return false;
         }
     } catch (Exception $e) {
-        // echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         return false;
     }
 }
