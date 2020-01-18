@@ -2,6 +2,7 @@
 
 include('phpmail.php');
 
+
 /***************************** helper functions *********************************/
 
 function clean($string)
@@ -190,27 +191,28 @@ function activate_user()
 }
 function add_student($email)
 {
-$query = "SELECT * FROM users WHERE email ='$email'";
-$result = query($query);
-confirm($result);
-$row = fetch_array($result);
-$id = $row['id'];
-$email = $row['email'];
-$first_name  = $row['first_name'];
-$last_name = $row['last_name'];
-$gender = $row['gender'];
-$password = $row['password'];
-$query = "INSERT INTO students (`id`,`email`,`first_name`,`last_name`,`password`,`Gender`) VALUES ('$id','$email','$first_name','$last_name','$password','$gender');";
-$result = query($query);
-confirm($result);
+    $query = "SELECT * FROM users WHERE email ='$email'";
+    $result = query($query);
+    confirm($result);
+    $row = fetch_array($result);
+    $id = $row['id'];
+    $email = $row['email'];
+    $first_name  = $row['first_name'];
+    $last_name = $row['last_name'];
+    $gender = $row['gender'];
+    $password = $row['password'];
+    $query = "INSERT INTO students (`id`,`email`,`first_name`,`last_name`,`password`,`Gender`) VALUES ('$id','$email','$first_name','$last_name','$password','$gender');";
+    $result = query($query);
+    confirm($result);
 }
-function checkProjectStatus($email){
+function checkProjectStatus($email)
+{
     $query = "SELECT projectSelected FROM students WHERE email = '$email'";
     $result = query($query);
     confirm($result);
     $row = fetch_array($result);
-    if($row['projectSelected'] == 0)
-    return false;
+    if ($row['projectSelected'] == 0)
+        return false;
     return true;
 }
 /***************************** login validation functions *********************************/
@@ -243,19 +245,21 @@ function validate_user_login()
         }
     }
 }
-function getProjectCount($email){
+function getProjectCount($email)
+{
     $query = "SELECT projectSelected FROM `students` WHERE email = '$email'";
     $res = query($query);
     confirm($res);
     $row = fetch_array($res);
     return $row['projectSelected'];
 }
-function getProjectName($id){
+function getProjectName($id)
+{
     $query = "SELECT title FROM projects WHERE id = '$id'";
     $res = query($query);
     confirm($res);
-    $row=fetch_array($res);
-    return $row['title']; 
+    $row = fetch_array($res);
+    return $row['title'];
 }
 /***************************** login user function *********************************/
 function login_user($email, $password, $remember)
@@ -412,20 +416,23 @@ function add_project($email, $title, $description)
     return;
 }
 // For adding the college of the student
-function setCollegeName($email,$name){
+function setCollegeName($email, $name)
+{
     $query = "UPDATE students SET college = '$name' WHERE email = '$email';";
     $result = query($query);
     confirm($result);
 }
-function setDescription($email,$description){
+function setDescription($email, $description)
+{
     $query = "UPDATE students SET description = '$description' WHERE email = '$email';";
     $result = query($query);
     confirm($result);
 }
-function getAllProfProjects($email){
+function getAllProfProjects($email)
+{
     $query = "SELECT * FROM `students` WHERE email = '$email'";
     $res = query($query);
-    confirm($res);  
+    confirm($res);
     $row = fetch_array($res);
     $project1_id = $row['project1_id'];
     $project2_id = $row['project2_id'];
@@ -434,48 +441,52 @@ function getAllProfProjects($email){
     $query  = "SELECT * FROM `projects`  WHERE id != '$project1_id' AND  id != '$project2_id' AND id != '$project3_id' AND id != '$project4_id'";
     $res = query($query);
     confirm($res);
-    $data=array();
-    while($row = mysqli_fetch_array($res)){
-        $data[]=$row;
+    $data = array();
+    while ($row = mysqli_fetch_array($res)) {
+        $data[] = $row;
     }
     mysqli_free_result($res);
     return $data;
 }
-function getParticularProfProjects($id,$phase){
+function getParticularProfProjects($id, $phase)
+{
     $query  = "SELECT project_id FROM prefrence_$phase WHERE prof_id = '$id'";
-     $res = query($query);
-     confirm($res);
-        $data = array();
-        while ($row = mysqli_fetch_array($res)) {
-            $data[] = $row;
-        }
-        mysqli_free_result($res);
-        return $data;
+    $res = query($query);
+    confirm($res);
+    $data = array();
+    while ($row = mysqli_fetch_array($res)) {
+        $data[] = $row;
+    }
+    mysqli_free_result($res);
+    return $data;
 }
-function getRegisteredStudents($id){
+function getRegisteredStudents($id)
+{
     $query = "SELECT * FROM `students` WHERE project1_id = '$id' OR project2_id = '$id' OR project3_id = '$id' OR project4_id = '$id'";
     $res = query($query);
     confirm($res);
     $data = array();
-    while($row = mysqli_fetch_array($res)){
+    while ($row = mysqli_fetch_array($res)) {
         $data[] = $row;
     }
     mysqli_free_result($res);
     return $data;
 }
 
-function getDepartments(){
+function getDepartments()
+{
     $query = "SELECT * FROM departments";
     $res = query($query);
     confirm($res);
-    while($row = mysqli_fetch_array($res)){
+    while ($row = mysqli_fetch_array($res)) {
         $data[] = $row;
     }
     mysqli_free_result($res);
     return $data;
 }
 
-function insertInPrefrences($count,$student_id,$project_id){
+function insertInPrefrences($count, $student_id, $project_id)
+{
     $query = "SELECT prof_id FROM projects WHERE id = '$project_id'";
     $res = query($query);
     confirm($res);
@@ -486,17 +497,19 @@ function insertInPrefrences($count,$student_id,$project_id){
     $query = "INSERT INTO `prefrence_$count` (`project_id`,`student_id`,`prof_id`) VALUES ('$project_id','$student_id','$prof_id')";
     $res = query($query);
     confirm($res);
-    return ;
+    return;
 }
 
-function getProfPhase($id){
+function getProfPhase($id)
+{
     $query =  "SELECT phase FROM professors WHERE id = '$id'";
     $res = query($query);
     confirm($res);
     $row = fetch_array($res);
     return $row['phase'];
 }
-function getProjectTitle($id){
+function getProjectTitle($id)
+{
     $query  = "SELECT title FROM projects WHERE id = '$id'";
     $res = query($query);
     confirm($res);
@@ -504,14 +517,38 @@ function getProjectTitle($id){
     return $row['title'];
 }
 
-function getStudentsInPhase($id,$phase,$proj_id){
-    $query = "SELECT first_name, last_name FROM students AS s , prefrence_$phase AS p WHERE p.prof_id = '$id' AND p.project_id='$proj_id' AND p.student_id = s.id";
+function getStudentsInPhase($id, $phase, $proj_id)
+{
+    $query = "SELECT id,first_name, last_name FROM students AS s , prefrence_$phase AS p WHERE p.prof_id = '$id' AND p.project_id='$proj_id' AND p.student_id = s.id";
     $res = query($query);
     confirm($res);
     $data = array();
-    while($row = mysqli_fetch_array($res)){
+    while ($row = mysqli_fetch_array($res)) {
         $data[] = $row;
     }
     mysqli_free_result($res);
     return $data;
+}
+
+function updatePhase($id)
+{
+    $format = "d/m/Y H:i:s";
+    $date1 = date($format,strtotime("2020-01-18 02:05:00",time()));
+    $date2 = date($format,strtotime("2020-01-18 02:10:00",time()));
+    $date3 = date($format,strtotime("2020-01-18 02:15:00",time()));
+    $date4 = date($format,strtotime("2020-02-18 02:30:00",time()));
+    $curDate = date($format,strtotime("now"));
+    var_dump($curDate);
+    $query = "";
+    if ($curDate > $date1 && $curDate < $date2) {
+        $query = "UPDATE professors SET phase = 2 WHERE id ='$id'";
+    } else if ($curDate > $date2 && $curDate < $date3) {
+        $query = "UPDATE professors SET phase = 3 WHERE id ='$id'";
+    } else if ($curDate > $date3 && $curDate < $date4) {
+        $query = "UPDATE professors SET phase = 4 WHERE id ='$id'";
+    } else {
+        $query = "UPDATE professors SET phase = 0 WHERE id ='$id'";
+    }
+    $res = query($query);
+    confirm($res);
 }
