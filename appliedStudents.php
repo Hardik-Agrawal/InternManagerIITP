@@ -8,6 +8,7 @@ if (!logged_in()) {
 $id = $_SESSION['id'];
 updatePhase($id);
 $phase = getProfPhase($id);
+var_dump($phase);
 $projects = array();
 
 if ($phase != 0) {
@@ -42,7 +43,6 @@ if(isset($_POST['selectStudent'])) {
         <h1>Projects</h1>
         <?php foreach ($projects as $project) {
             $title = getProjectTitle($project['project_id']);
-            print_r($title);
             $proj_id = $project['project_id'];
             $students = getStudentsInPhase($id, $phase, $proj_id);
         ?>

@@ -166,7 +166,7 @@ function activate_user()
         if (isset($_GET['email'])) {
             $email = escape($_GET['email']);
             $validation_code = escape($_GET['code']);
-            $sql = "SELECT id, active FROM users WHERE email = '$email' AND validation_code = '$validation_code'";
+            $sql = "SELECT id,type,active FROM users WHERE email = '$email' AND validation_code = '$validation_code'";
             $result = query($sql);
             confirm($result);
             if (row_count($result) == 1) {
@@ -178,7 +178,12 @@ function activate_user()
                     $sql2 = "UPDATE users SET active = 1 WHERE email = '$email' AND validation_code = '$validation_code'";
                     $result2 = query($sql2);
                     confirm($result2);
-
+                    $id = $row['id'];
+                    if($row['type'] == 1){
+                    $sql3 = "INSERT INTO professors (`id`,`phase`) VALUES ($id,'1')";
+                    $result3 = query($sql3);
+                    confirm($result3);
+                    }
                     set_message("<p class='alert alert-success'>Your account has been activated.<p>");
                     redirect("login.php");
                 }
@@ -502,6 +507,7 @@ function insertInPrefrences($count, $student_id, $project_id)
 
 function getProfPhase($id)
 {
+    var_dump($id);
     $query =  "SELECT phase FROM professors WHERE id = '$id'";
     $res = query($query);
     confirm($res);
@@ -533,20 +539,21 @@ function getStudentsInPhase($id, $phase, $proj_id)
 function updatePhase($id)
 {
     $format = "d/m/Y H:i:s";
-    $date1 = date($format,strtotime("2020-01-18 02:05:00",time()));
-    $date2 = date($format,strtotime("2020-01-18 02:10:00",time()));
-    $date3 = date($format,strtotime("2020-01-18 02:15:00",time()));
-    $date4 = date($format,strtotime("2020-02-18 02:30:00",time()));
+    $date1 = date($format,strtotime("2020-03-09 16:55:00",time()));
+    $date2 = date($format,strtotime("2020-03-09 17:55:00",time()));
+    $date3 = date($format,strtotime("2020-02-03 06:08:00",time()));
+    $date4 = date($format,strtotime("2020-02-03 06:10:50",time()));
     $curDate = date($format,strtotime("now"));
-    var_dump($curDate);
-    $query = "";
+    $query = "UPDATE professors SET phase=1 WHERE id = '$id'";
+    var_dump($curDate,$date1);
+    var_dump($curDate > $date1 && $curDate < $date2 );
     if ($curDate > $date1 && $curDate < $date2) {
         $query = "UPDATE professors SET phase = 2 WHERE id ='$id'";
     } else if ($curDate > $date2 && $curDate < $date3) {
         $query = "UPDATE professors SET phase = 3 WHERE id ='$id'";
     } else if ($curDate > $date3 && $curDate < $date4) {
         $query = "UPDATE professors SET phase = 4 WHERE id ='$id'";
-    } else {
+    } else if($curDate > $date1) {
         $query = "UPDATE professors SET phase = 0 WHERE id ='$id'";
     }
     $res = query($query);
