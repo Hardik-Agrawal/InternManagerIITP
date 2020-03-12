@@ -10,6 +10,7 @@ while ($row = mysqli_fetch_array($res)) {
 }
 mysqli_free_result($res);
 $departments = getDepartments();
+$department = 'Chemical';
 if (isset($_POST['searchDepartments'])) {
     $department = $_POST['department'];
     $query = "SELECT * FROM projects WHERE department = '$department'";
@@ -27,8 +28,11 @@ if (isset($_POST['searchDepartments'])) {
     <form action="" method="POST">
         <label for="department">Select Department</label>
         <select name="department">
+            <option value=<?php echo  $department ?>><?php echo $department ?> </option>
             <?php foreach ($departments as $k => $v) : ?>
-                <option value=<?php echo  $v['name'] ?>><?php echo $v['name'] ?> </option>
+                <?php if ($v['name'] !== $department) : ?>
+                    <option value=<?php echo  $v['name'] ?>><?php echo $v['name'] ?> </option>
+                <?php endif; ?>
             <?php endforeach; ?>
         </select>
         <input type="submit" value="Search" name="searchDepartments">
