@@ -25,7 +25,7 @@ if (isset($_POST['submitProj'])) {
 		if (isset($_POST[$v[0]])) {
 			insertInPrefrences($projectCount, $_SESSION['id'], $v[0]);
 			$var = "project" . $projectCount . "_id";
-			print_r($var);
+			// print_r($var);
 			$query = "UPDATE students SET $var = '$v[0]'  WHERE email = '$email';";
 			$res = query($query);
 			confirm($res);
@@ -87,11 +87,11 @@ foreach ($projects as $val) {
 							</div>
 						</form>
 					<?php else : ?>
-						<div class="form-group">
+						<!-- <div class="form-group">
 							change uploaded Image:
 							<input type="file" name="myfile" id="fileToUpload" class="form-control">
 							<input type="submit" name="submitImage" value="Upload File Now" class="form-control btn btn-primary">
-						</div>
+						</div> -->
 					<?php endif; ?>
 				</div>
 			</div>
@@ -115,16 +115,18 @@ foreach ($projects as $val) {
 				<?php if ($row['college'] != '') : ?>
 					<h3>College: <?php echo $row['college'] ?></h3>
 				<?php endif; ?>
-				<?php if ($row['college'] != '') : ?>
-					<h3>Description</h3>
+				<?php if ($row['description'] != '') : ?>
+					<h3>Description:</h3>
 					<p><?php echo $row['description'] ?></p>
 				<?php endif; ?>
 			<?php endif; ?>
 			<form action="" method="post" enctype="multipart/form-data">
 				<div class="form-group">
-					Upload the resume:
-					<input type="file" name="myfile" id="fileToUpload" class="form-control">
-					<input type="submit" name="submitResume" value="Upload File Now" class="form-control btn btn-primary">
+					<?php if ($row['resumeName'] == '') : ?>
+						Upload the resume:
+						<input type="file" name="myfile" id="fileToUpload" class="form-control">
+						<input type="submit" name="submitResume" value="Upload File Now" class="form-control btn btn-primary">
+					<?php endif; ?>
 				</div>
 			</form>
 		</div>
@@ -159,7 +161,7 @@ foreach ($projects as $val) {
 							<tbody>
 								<?php foreach ($temp as $key => $val) : ?>
 									<tr>
-										<td><input type="checkbox" name=<?php echo $val[0] ?>></td>
+										<td><input type="checkbox" name=<?php echo $val[0] ?> class="ProgCheck" onclick="onlyOne(this)"></td>
 										<td><?php echo $val['title'] ?></td>
 										<td><?php echo $val['description'] ?></td>
 										<td><a href='<?php echo $val['project_webpage'] ?>'></a><?php echo $val['project_webpage'] ?></td>
@@ -189,4 +191,6 @@ foreach ($projects as $val) {
 		</div>
 	<?php endif; ?>
 </div>
+
+<script src="./functions/javascript/onlyone.js"> </script>
 <?php include('includes/footer.php') ?>

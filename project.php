@@ -41,13 +41,13 @@ if (isset($_POST['searchDepartments'])) {
         <div class="card">
             <h5 class="card-header"><?php echo $project['title'] ?></h5>
             <div class="card-body">
-                <h5>Title <?php echo $project['title']  ?></h5>
+                <h5>Title: <?php echo $project['title']  ?></h5>
                 <p class="card-text"><?php echo $project['description'] ?></p>
                 <h5>Abstract : <?php echo $project['abstract']; ?></h5>
                 <h5>Department : <?php echo $project['department']; ?></h5>
                 <h5>Skills : <?php $project['skills'] ?></h5>
-                <h5>Project-Wepage : <a href=<?php echo $project['project_webpage'] ?>>Project Webpage</a></h5>
-                <h5> Faculty-Wepage : <a href=<?php echo $project['faculty_webpage'] ?>>Faculty Webpage</a></h5>
+                <h5>Project-Wepage : <a href=<?php echo "http://" . $project['project_webpage'] ?> target="_blank">Project Webpage</a></h5>
+                <h5> Faculty-Wepage : <a href=<?php echo "http://" . $project['faculty_webpage'] ?> target="_blank">Faculty Webpage</a></h5>
             </div>
             <br />
         <?php } ?>

@@ -9,7 +9,8 @@ if (isset($_POST['submitResume'])) {
     $fileSize = $_FILES['myfile']['size'];
     $fileTmpName  = $_FILES['myfile']['tmp_name'];
     $fileType = $_FILES['myfile']['type'];
-    $fileExtension = strtolower(end(explode('.', $fileName)));
+    $fileExplode = explode('.', $fileName);
+    $fileExtension = strtolower(end($fileExplode));
 
     $uploadPath = $currentDir . $uploadDirectory . basename($fileName);
     // Add image name to the database  
