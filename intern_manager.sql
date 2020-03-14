@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 12, 2020 at 08:46 AM
+-- Generation Time: Mar 14, 2020 at 07:22 PM
 -- Server version: 10.1.40-MariaDB
 -- PHP Version: 7.3.5
 
@@ -56,6 +56,13 @@ CREATE TABLE `prefrence_1` (
   `prof_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `prefrence_1`
+--
+
+INSERT INTO `prefrence_1` (`project_id`, `student_id`, `prof_id`) VALUES
+(52, 36, 40);
+
 -- --------------------------------------------------------
 
 --
@@ -67,6 +74,13 @@ CREATE TABLE `prefrence_2` (
   `student_id` int(11) NOT NULL,
   `prof_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `prefrence_2`
+--
+
+INSERT INTO `prefrence_2` (`project_id`, `student_id`, `prof_id`) VALUES
+(53, 36, 40);
 
 -- --------------------------------------------------------
 
@@ -80,6 +94,13 @@ CREATE TABLE `prefrence_3` (
   `prof_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `prefrence_3`
+--
+
+INSERT INTO `prefrence_3` (`project_id`, `student_id`, `prof_id`) VALUES
+(49, 36, 34);
+
 -- --------------------------------------------------------
 
 --
@@ -91,6 +112,13 @@ CREATE TABLE `prefrence_4` (
   `student_id` int(11) NOT NULL,
   `prof_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `prefrence_4`
+--
+
+INSERT INTO `prefrence_4` (`project_id`, `student_id`, `prof_id`) VALUES
+(47, 36, 34);
 
 -- --------------------------------------------------------
 
@@ -109,7 +137,7 @@ CREATE TABLE `professors` (
 
 INSERT INTO `professors` (`id`, `phase`) VALUES
 (34, 1),
-(40, 1);
+(40, 2);
 
 -- --------------------------------------------------------
 
@@ -135,13 +163,13 @@ CREATE TABLE `projects` (
 --
 
 INSERT INTO `projects` (`id`, `prof_id`, `title`, `abstract`, `description`, `department`, `skills`, `project_webpage`, `faculty_webpage`, `pdf_loc`) VALUES
-(46, 34, 'Ghar banana hai', 'afsdjk', 'kljfdsalkjdl', 'Civil', 'fkldasjkfl', 'flkjsdaklf', 'fjklsda', ''),
+(46, 34, 'Ghar banana hai', 'afsdjk', 'kljfdsalkjdl', 'Civil', 'fkldasjkfl', 'www.iitp.ac.in', 'fjklsda', ''),
 (47, 34, 'NLP project', 'fjlaksdjf', 'fjksadjl', 'Computer', 'fjlksjd', 'lkfjkla', 'kfjaklsdf', ''),
 (48, 34, 'zeher banana hai', 'fklasfd', 'fasdf', 'Chemical', 'fasdf', 'fadsfa', 'fdsaf', ''),
 (49, 34, 'Electric Car', 'jflkasj', 'fjlkjfkslafj', 'Electrical', 'alksjfdk', 'fjalksdf', 'faslkdfj', ''),
 (50, 34, 'asdf', 'asjkdfa', 'jlkfjsdklfj', 'Electronics', 'lfkajsdkfj', 'fjaklsdjflka', 'jflkdsajf', ''),
 (51, 34, 'RObot bhi bana do', 'asjfd', 'lkfjsaj', 'Mechanical', 'flaksdf', 'fjaskldf', 'fjklsda', ''),
-(52, 40, '', '', '', 'Civil', 'Burj khaifa banega ', 'www.burjkhaifabanega.com', 'www.iitp.ac.in', ''),
+(52, 40, 'Burj Khalifa', '', '', 'Civil', 'Burj khaifa banega ', 'www.burjkhaifabanega.com', 'www.iitp.ac.in', ''),
 (53, 40, 'FB', 'fjksdvlfmflaskmd', 'ufdshjkdfj', 'Chemical', 'Gaana aana chaiye', 'aaa', 'aaa', '');
 
 -- --------------------------------------------------------
@@ -177,7 +205,7 @@ CREATE TABLE `students` (
 
 INSERT INTO `students` (`id`, `email`, `first_name`, `last_name`, `password`, `Gender`, `college`, `project1_id`, `project2_id`, `project3_id`, `project4_id`, `description`, `resumeName`, `imageName`, `projectSelected`, `selected`, `prof_id`, `proj_id`) VALUES
 (40, '1801ce10@iitp.ac.in', 'Hardik', 'Agrawal', '827ccb0eea8a706c4c34a16891f84e7b', 'Male', '', 0, 0, 0, 0, '', '', '', 0, 0, 0, 0),
-(36, 'hardik1509agrawal@gmail.com', 'Hardik', 'Agrawal', '827ccb0eea8a706c4c34a16891f84e7b', 'Male', '', 0, 0, 0, 0, '', '', '', 0, 0, 0, 0),
+(36, 'hardik1509agrawal@gmail.com', 'Hardik', 'Agrawal', '827ccb0eea8a706c4c34a16891f84e7b', 'Male', 'IIT Patna', 52, 53, 49, 47, 'Main koi asa geet gau ki aarsu jagau agar tum khao', '18.pdf', '1.jpg', 4, 1, 40, 52),
 (31, 'ritwizsinha0@gmail.com', 'prem', 'bhawnani', '202cb962ac59075b964b07152d234b70', 'Male', '', 47, 49, 48, 50, '', 'CS-225-Ass1-2-CS39.pdf', '', 4, 1, 34, 47);
 
 -- --------------------------------------------------------

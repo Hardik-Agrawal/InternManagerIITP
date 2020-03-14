@@ -35,6 +35,13 @@ if (isset($_POST['selectStudent'])) {
     $headers = "";
     send_email($email, $subject, $msg, $headers);
 }
+
+if (isset($_POST['resumeDownload'])) {
+    $student_id = $_POST['id'];
+    $GLOBALS["student_id"];
+
+    echo '<script type="text/javascript" language="Javascript">window.open("resumeDownload.php");</script>';
+}
 ?>
 <div class="container">
     <?php if ($phase === 0) : ?>
@@ -51,11 +58,13 @@ if (isset($_POST['selectStudent'])) {
                 <ul class="list-group">
                     <?php foreach ($students as $student) : ?>
                         <form action="" method="POST">
-                            <p type="button" class="list-group-item list-group-item-action"><?php echo $student['first_name'] . "  " . $student['last_name']; ?>
+                            <div type="button" class="list-group-item list-group-item-action" style="box-sizing:border-box">
+                                <?php echo $student['first_name'] . "  " . $student['last_name']; ?>
                                 <input type="text" value=<?php echo $student['id'] ?> style="display:none;" name="id">
                                 <input type="text" value=<?php echo $proj_id ?> style="display:none;" name="proj_id">
-                                <input type="submit" value="Select" name="selectStudent" class="btn btn-primary">
-                            </p>
+                                <input type="submit" value="Select" name="selectStudent" class="btn btn-primary float-right" style="margin: 0 20px">
+                                <input type="submit" value="Download Resume" name="resumeDownload" class="btn btn-warning float-right" style="margin: 0 20px">
+                            </div>
                         </form>
                     <?php endforeach; ?>
                 <?php endif ?>

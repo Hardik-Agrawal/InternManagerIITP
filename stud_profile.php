@@ -7,6 +7,7 @@ if (!logged_in()) {
 	set_message("<p class='bg-danger'>Please login again to view that page<p>");
 	redirect("login.php");
 }
+
 $row = getStudentDetails($_SESSION['email']);
 require './imageUpload.php';
 require './resumeUpload.php';
@@ -21,21 +22,29 @@ $error = '';
 $projectCount  = getProjectCount($row['email']) + 1;
 if (isset($_POST['submitProj'])) {
 	$email = $_SESSION['email'];
-	foreach ($temp as $k => $v) {
-		if (isset($_POST[$v[0]])) {
-			insertInPrefrences($projectCount, $_SESSION['id'], $v[0]);
-			$var = "project" . $projectCount . "_id";
-			// print_r($var);
-			$query = "UPDATE students SET $var = '$v[0]'  WHERE email = '$email';";
-			$res = query($query);
-			confirm($res);
-			$query = "UPDATE students SET projectSelected = '$projectCount' WHERE email = '$email';";
-			$res = query($query);
-			confirm($res);
-			$error = "Succesfully submitted your response";
-			$temp = getAllProfProjects($row['email']);
-			$projectCount  = getProjectCount($row['email']) + 1;
-			$row = getStudentDetails($_SESSION['email']);
+	$res = query("SELECT resumeName FROM students WHERE email = '$email'");
+	$obj = mysqli_fetch_array($res);
+	$resume_name = $obj["resumeName"];
+
+	if ($resume_name == '') {
+		$error = "Upload Your Resume";
+	} else {
+		foreach ($temp as $k => $v) {
+			if (isset($_POST[$v[0]])) {
+				insertInPrefrences($projectCount, $_SESSION['id'], $v[0]);
+				$var = "project" . $projectCount . "_id";
+				// print_r($var);
+				$query = "UPDATE students SET $var = '$v[0]'  WHERE email = '$email';";
+				$res = query($query);
+				confirm($res);
+				$query = "UPDATE students SET projectSelected = '$projectCount' WHERE email = '$email';";
+				$res = query($query);
+				confirm($res);
+				$error = "Succesfully submitted your response";
+				$temp = getAllProfProjects($row['email']);
+				$projectCount  = getProjectCount($row['email']) + 1;
+				$row = getStudentDetails($_SESSION['email']);
+			}
 		}
 	}
 }
@@ -131,20 +140,50 @@ foreach ($projects as $val) {
 			</form>
 		</div>
 	</div>
+
+	<div class="row">
+		<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+			<h1>Chosen Projects</h1>
+			<div class="list-group">
+				<?php foreach ($projectNames as $name) :  ?>
+					<a href="#" class="list-group-item list-group-item-action ">
+						<?php echo $name ?>
+					</a>
+				<?php endforeach; ?>
+			</div>
+		</div>
+	</div>
+
 	<?php if ($row['projectSelected'] != 4) : ?>
 		<div class="row">
 			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 				<h1>Select Projects</h1>
 				<?php if ($error != '') : ?>
-					<div class="alert alert-warning alert-dismissible fade show" role="alert">
-						<?php echo $error ?>
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
+					<?php if ($error == "Succesfully submitted your response") : ?>
+						<div class="alert alert-warning alert-dismissible fade show" role="alert">
+							<?php echo $error ?>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					<?php else : ?>
+						<div class="alert alert-danger alert-dismissible fade show" role="alert">
+							<?php echo $error ?>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					<?php endif; ?>
 				<?php endif; ?>
+
+				<ol>
+					<li>Upload Your Resume</li>
+					<li>Select project according to your prefernce (Atmost 4)</li>
+					<li>Press "Submit"</li>
+					<li>You will get mail within 15 days regarding your aplication</li>
+				</ol>
 			</div>
-			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="display: inline">
 				<h1>Select preference <?php echo $projectCount ?></h1>
 				<form action="" method="POST">
 					<div class="form-group">
@@ -176,20 +215,9 @@ foreach ($projects as $val) {
 				</form>
 			</div>
 		</div>
-	<?php else : ?>
-		<div class="row">
-			<div class="col-lg-8 col-md-8 col-sm-8">
-				<h1>Chosen Projects</h1>
-				<div class="list-group">
-					<?php foreach ($projectNames as $name) :  ?>
-						<a href="#" class="list-group-item list-group-item-action ">
-							<?php echo $name ?>
-						</a>
-					<?php endforeach; ?>
-				</div>
-			</div>
-		</div>
 	<?php endif; ?>
+
+
 </div>
 
 <script src="./functions/javascript/onlyone.js"> </script>
