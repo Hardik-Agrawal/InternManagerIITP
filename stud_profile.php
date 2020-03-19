@@ -202,10 +202,8 @@ foreach ($projects as $val) {
 									<tr>
 										<td><input type="checkbox" name=<?php echo $val[0] ?> class="ProgCheck" onclick="onlyOne(this)"></td>
 										<td><?php echo $val['title'] ?></td>
-										<td><?php echo $val['description'] ?></td>
 										<td><a href='<?php echo $val['project_webpage'] ?>'></a><?php echo $val['project_webpage'] ?></td>
 										<td><a href='<?php echo $val['faculty_webpage'] ?>'></a><?php echo $val['faculty_webpage'] ?></td>
-
 									</tr>
 								<?php endforeach; ?>
 							</tbody>

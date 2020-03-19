@@ -7,8 +7,8 @@ if (!logged_in()) {
 }
 $row = getUserDetails($_SESSION['email']);
 $projects = getProfProjects($_SESSION['id']);
-if(isset($_POST['submitPDF'])){
-	uploadPDF($_POST['id'],$_FILES);
+if (isset($_POST['submitPDF'])) {
+	uploadPDF($_POST['id'], $_FILES);
 }
 ?>
 
@@ -35,21 +35,21 @@ if(isset($_POST['submitPDF'])){
 		<div class="card">
 			<h5 class="card-header"><?php echo $project['title'] ?></h5>
 			<div class="card-body">
-				<h5>Title  <?php echo $project['title']  ?></h5>
+				<h5>Title <?php echo $project['title']  ?></h5>
 				<p class="card-text"><?php echo $project['description'] ?></p>
-				<h5>Abstract :  <?php echo $project['abstract']; ?></h5>
-				<h5>Deparment : <?php echo $project['department'] ;?></h5>
+				<h5>Abstract : <?php echo $project['abstract']; ?></h5>
+				<h5>Deparment : <?php echo $project['department']; ?></h5>
 				<h5>Skills : <?php $project['skills'] ?></h5>
-				<h5>Project-Wepage : <a href=<?php echo $project['project_webpage'] ?>>Project Webpage</a></h5>
-				<h5>	Faculty-Wepage : <a href=<?php echo $project['faculty_webpage'] ?>>Faculty Webpage</a></h5>
+				<h5>Project-Wepage : <a href=<?php echo "https://" . $project['project_webpage'] ?> target="_blank">Project Webpage</a></h5>
+				<h5> Faculty-Wepage : <a href=<?php echo "https://" . $project['faculty_webpage'] ?> target="_blank">Faculty Webpage</a></h5>
 				<form action="" method="post" enctype="multipart/form-data">
-				<div class="form-group">
-					<input type="text" name="id"  style="display:none" value=<?php echo $project['id']  ?>> 
-					Upload pdf for the project
-					<input type="file" name="myfile" id="fileToUpload" class="form-control">
-					<input type="submit" name="submitPDF" value="Upload File Now" class="form-control btn btn-primary">
-				</div>
-			</form>
+					<div class="form-group">
+						<input type="text" name="id" style="display:none" value=<?php echo $project['id']  ?>>
+						Upload pdf for the project
+						<input type="file" name="myfile" id="fileToUpload" class="form-control">
+						<input type="submit" name="submitPDF" value="Upload File Now" class="form-control btn btn-primary">
+					</div>
+				</form>
 			</div>
 		</div>
 		<br />

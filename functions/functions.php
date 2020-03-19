@@ -507,7 +507,7 @@ function insertInPrefrences($count, $student_id, $project_id)
 
 function getProfPhase($id)
 {
-    var_dump($id);
+    // var_dump($id);
     $query =  "SELECT phase FROM professors WHERE id = '$id'";
     $res = query($query);
     confirm($res);
@@ -539,10 +539,10 @@ function getStudentsInPhase($id, $phase, $proj_id)
 function updatePhase($id)
 {
     $format = "d/m/Y H:i:s";
-    $date1 = date($format, strtotime("2020-03-14 12:55:00", time()));
-    $date2 = date($format, strtotime("2020-03-15 17:55:00", time()));
-    $date3 = date($format, strtotime("2020-03-16 06:08:00", time()));
-    $date4 = date($format, strtotime("2020-03-17 06:10:50", time()));
+    $date1 = date($format, strtotime("2020-03-20 12:55:00", time()));
+    $date2 = date($format, strtotime("2020-03-21 17:55:00", time()));
+    $date3 = date($format, strtotime("2020-03-22 06:08:00", time()));
+    $date4 = date($format, strtotime("2020-03-23 06:10:50", time()));
     $curDate = date($format, strtotime("now"));
     $query = "UPDATE professors SET phase=1 WHERE id = '$id'";
     // var_dump($curDate, $date1);
