@@ -48,6 +48,9 @@ if (isset($_POST['searchDepartments'])) {
                 <h5>Skills : <?php $project['skills'] ?></h5>
                 <h5>Project-Wepage : <a href=<?php echo "http://" . $project['project_webpage'] ?> target="_blank">Project Webpage</a></h5>
                 <h5> Faculty-Wepage : <a href=<?php echo "http://" . $project['faculty_webpage'] ?> target="_blank">Faculty Webpage</a></h5>
+                <?php if ($project["pdfName"] !== '') : ?>
+                    <a class="btn btn-warning" href="./projectFileDownload.php?id=<?php echo $project["id"] ?>" target="_blank">Download File</a>
+                <?php endif; ?>
             </div>
             <br />
         <?php } ?>

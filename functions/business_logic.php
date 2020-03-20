@@ -39,6 +39,13 @@ function addPdfToDatabase($name, $email)
     $result = query($query);
     confirm($result);
 }
+
+function addProjectPdfToDatabase($name, $id)
+{
+    $query = "UPDATE projects SET pdfName = '$name' WHERE id = $id";
+    $result = query($query);
+    confirm($result);
+}
 function enterData($data, $id)
 {
     $title = $data['projectTitle'];
@@ -54,13 +61,14 @@ function enterData($data, $id)
     confirm($res);
     return redirect("prof_profile.php");
 }
-function uplodadPDFtoDatabase($id,$name){
+function uplodadPDFtoDatabase($id, $name)
+{
     $query = "UPDATE projects SET pdf_loc='$name' WHERE id = '$id'";
     $res = query($query);
     confirm($res);
-    return ;
+    return;
 }
-function uploadPDF($id,$files)
+function uploadPDF($id, $files)
 {
     $currentDir = getcwd();
     $uploadDirectory = "/uploads/projects/";
@@ -70,9 +78,10 @@ function uploadPDF($id,$files)
 
     $fileName = $files['myfile']['name'];
     $fileSize = $files['myfile']['size'];
-    $fileTmpName  = $files['myfile']['tmp_name'];   
+    $fileTmpName  = $files['myfile']['tmp_name'];
     $fileType = $files['myfile']['type'];
-    $fileExtension = strtolower(end(explode('.', $fileName)));
+    $expoldedFile = explode('.', $fileName);
+    $fileExtension = strtolower(end($expoldedFile));
 
     $uploadPath = $currentDir . $uploadDirectory . basename($fileName);
     // Add image name to the database  
@@ -80,12 +89,12 @@ function uploadPDF($id,$files)
         $errors[] = "This file extension is not allowed. Please upload a pdf file";
     }
     if (empty($errors)) {
-        uplodadPDFtoDatabase($id,$fileName);
+        uplodadPDFtoDatabase($id, $fileName);
         $didUpload = move_uploaded_file($fileTmpName, $uploadPath);
 
         if ($didUpload) {
             // Add image name to the database
-            
+
             $resumeUploadError =  "Successfully Uploaded";
         } else {
             $resumeUploadError =  "An error occurred somewhere. Try again or contact the admin";

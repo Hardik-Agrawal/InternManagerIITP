@@ -6,11 +6,28 @@ if (!logged_in()) {
 	redirect("login.php");
 }
 $row = getUserDetails($_SESSION['email']);
+require './projectFileUpload.php';
 $projects = getProfProjects($_SESSION['id']);
 if (isset($_POST['submitPDF'])) {
 	uploadPDF($_POST['id'], $_FILES);
 }
 ?>
+
+<?php if ($projectUploadError !== 'Successfully Uploaded' && $projectUploadError !== '') : ?>
+	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+		<?php echo $projectUploadError ?>
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+<?php elseif ($projectUploadError !== '') : ?>
+	<div class="alert alert-info alert-dismissible fade show" role="alert">
+		<?php echo $projectUploadError ?>
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+<?php endif; ?>
 
 <div class="container">
 	<br />
@@ -44,10 +61,14 @@ if (isset($_POST['submitPDF'])) {
 				<h5> Faculty-Wepage : <a href=<?php echo "https://" . $project['faculty_webpage'] ?> target="_blank">Faculty Webpage</a></h5>
 				<form action="" method="post" enctype="multipart/form-data">
 					<div class="form-group">
-						<input type="text" name="id" style="display:none" value=<?php echo $project['id']  ?>>
-						Upload pdf for the project
-						<input type="file" name="myfile" id="fileToUpload" class="form-control">
-						<input type="submit" name="submitPDF" value="Upload File Now" class="form-control btn btn-primary">
+						<?php if ($project['pdfName'] == '') : ?>
+							<input type="text" name="id" style="display:none" value=<?php echo $project['id']  ?>>
+							Upload pdf for the project
+							<input type="file" name="myfile" id="fileToUpload" class="form-control">
+							<input type="submit" name="submitProgPdf" value="Upload File Now" class="form-control btn btn-primary">
+						<?php else : ?>
+							<a class="btn btn-warning" href="./projectFileDownload.php?id=<?php echo $project["id"] ?>" target="_blank">Download File</a>
+						<?php endif; ?>
 					</div>
 				</form>
 			</div>

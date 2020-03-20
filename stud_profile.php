@@ -135,6 +135,10 @@ foreach ($projects as $val) {
 						Upload the resume:
 						<input type="file" name="myfile" id="fileToUpload" class="form-control">
 						<input type="submit" name="submitResume" value="Upload File Now" class="form-control btn btn-primary">
+					<?php else : ?>
+						Update the resume:
+						<input type="file" name="myfile" id="fileToUpload" class="form-control">
+						<input type="submit" name="submitResume" value="Upload File Now" class="form-control btn btn-primary">
 					<?php endif; ?>
 				</div>
 			</form>

@@ -1,13 +1,12 @@
 <?php
-
-$previousResume = $row['resumeName'];
-// printf($previousResume);
+// echo $prog_id;
 $currentDir = getcwd();
-$uploadDirectory = "/uploads/resumes/";
+$uploadDirectory = "/uploads/projectFile/";
 $errors = []; // Store all foreseen and unforseen errors here
-$resumeUploadError = '';
+$projectUploadError = '';
 $fileExtensions = ['pdf']; // Get all the file extensions
-if (isset($_POST['submitResume'])) {
+if (isset($_POST['submitProgPdf'])) {
+    $prog_id = $_POST["id"];
     $fileName = $_FILES['myfile']['name'];
     $fileSize = $_FILES['myfile']['size'];
     $fileTmpName  = $_FILES['myfile']['tmp_name'];
@@ -20,19 +19,17 @@ if (isset($_POST['submitResume'])) {
     if (!in_array($fileExtension, $fileExtensions)) {
         $errors[] = "This file extension is not allowed. Please upload a pdf file";
     }
+
     if (empty($errors)) {
 
         $didUpload = move_uploaded_file($fileTmpName, $uploadPath);
 
         if ($didUpload) {
-            //Deleting Previous Image from folder
-            $previousResumepointer = $currentDir . $uploadDirectory . $previousResume;
-            unlink($previousResumepointer);
             // Add image name to the database
-            addPdftoDatabase($fileName, $row['email']);
-            $resumeUploadError =  "Successfully Uploaded";
+            addProjectPdftoDatabase($fileName, $prog_id);
+            $projectUploadError =  "Successfully Uploaded";
         } else {
-            $resumeUploadError =  "An error occurred somewhere. Try again or contact the admin";
+            $projectUploadError =  "An error occurred somewhere. Try again or contact the admin";
         }
     } else {
         foreach ($errors as $error) {
